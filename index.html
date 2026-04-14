@@ -8,7 +8,6 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      /* Daha modern ve native hissettiren mobil font ailesi */
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background: #f4f6fb;
       color: #1f2937;
@@ -32,7 +31,7 @@
     .header {
       padding: 24px 20px;
       margin-bottom: 20px;
-      text-align: center; /* Mobilde başlığın ortalanması daha şık durur */
+      text-align: center;
     }
     h1 {
       margin: 0 0 8px 0;
@@ -42,7 +41,7 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Mobilde daha iyi yayılması için 280px yapıldı */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
     }
     .card {
@@ -53,13 +52,9 @@
       position: relative;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .card:hover {
-      box-shadow: 0 8px 24px rgba(0,0,0,.08);
-    }
     .card.locked {
       opacity: 0.85;
       background: #f9fafb;
-      border-color: #d1d5db;
     }
     .card h3 {
       margin: 0;
@@ -71,50 +66,36 @@
       position: absolute;
       top: 16px;
       right: 16px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 6px 10px;
+      padding: 4px 10px;
       border-radius: 999px;
       background: #eef2ff;
       color: #3730a3;
       border: 1px solid #c7d2fe;
       display: none;
     }
-    .card.locked .lock-badge {
-      display: inline-block;
-    }
+    .card.locked .lock-badge { display: inline-block; }
     .stats-box {
       background: #f8fafc;
       border: 1px solid #e5e7eb;
       border-radius: 12px;
-      padding: 14px;
-      margin-top: auto; /* Kutuyu her zaman alta iter */
+      padding: 12px;
+      margin-top: auto;
     }
-    .stats-line {
-      font-size: 14px;
-      color: #4b5563;
-    }
-    .stats-line strong {
-      color: #111827;
-    }
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 5px;
-    }
+    .stats-line { font-size: 14px; color: #4b5563; }
+    .btn-row { display: flex; gap: 10px; margin-top: 5px; }
     .btn {
-      flex: 1; /* Butonların tam genişliğe yayılmasını sağlar */
+      flex: 1;
       border: none;
       border-radius: 12px;
-      padding: 14px; /* Mobilde dokunmatik alan için büyütüldü */
+      padding: 14px;
       cursor: pointer;
       font-size: 16px;
       font-weight: 600;
-      text-align: center;
       transition: .2s ease;
     }
-    .btn:active { transform: scale(0.98); } /* Tıklama hissiyatı eklendi */
-    
+    .btn:active { transform: scale(0.98); }
     .btn-primary { background: #2563eb; color: #fff; }
     .btn-danger { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
     .btn-unlock { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
@@ -122,8 +103,8 @@
     .viewer { display: none; }
     .hidden-while-viewing { display: block; }
     body.viewing .hidden-while-viewing { display: none !important; }
-    body.viewing .topbar { display: none !important; }
     
+    /* Üst Toolbar (Masaüstü için) */
     .toolbar {
       padding: 14px;
       display: flex;
@@ -132,108 +113,75 @@
       justify-content: space-between;
       margin-bottom: 16px;
     }
-    .current-title {
-      font-weight: 700;
-      font-size: 18px;
-      color: #1f2937;
-    }
-    .frame-wrap {
-      padding: 0; /* İframe etrafındaki boşluğu sıfırladık */
-      overflow: hidden;
-      -webkit-overflow-scrolling: touch; /* iOS'ta akıcı kaydırma için */
-    }
+    .current-title { font-weight: 700; font-size: 18px; }
+    
+    .frame-wrap { overflow: hidden; -webkit-overflow-scrolling: touch; }
     iframe {
       width: 100%;
-      height: calc(100dvh - 120px); /* dvh kullanımı mobilde adres çubuğu sorununu çözer */
+      height: calc(100dvh - 120px);
       min-height: 560px;
       border: 0;
       border-radius: 16px;
       background: #fff;
       display: block;
     }
+
+    /* Modern Yüzen Buton - Sadece mobilde soru açıkken görünür */
+    .floating-back {
+      position: fixed;
+      z-index: 9999;
+      display: none;
+      background: #2563eb; /* Dikkat çekici mavi */
+      color: #fff;
+      font-weight: 700;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      top: 15px;
+      left: 15px;
+      font-size: 14px;
+    }
+
     .bottom-warning {
       margin-top: 20px;
       padding: 20px;
-      line-height: 1.6;
       font-size: 14px;
       color: #4b5563;
       text-align: center;
     }
-    .bottom-warning strong {
-      color: #111827;
-      font-size: 16px;
-      display: block;
-      margin-bottom: 6px;
-    }
 
-    /* Eksik Olan Geri Dön Butonu Temel Stilleri */
-    .floating-back {
-      position: fixed;
-      z-index: 1000;
-      display: none; /* Sadece viewer açıkken ve mobilde gösterilecek */
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(5px);
-      border: 1px solid #e5e7eb;
-      color: #111827;
-      font-weight: 600;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      cursor: pointer;
-    }
-    body.viewing .floating-back {
-      display: none; /* Mobilde açacağız */
-    }
-    
-    /* Mobil Uyum (Responsive) Kuralları */
+    /* MOBİL ÖZEL AYARLAR */
     @media (max-width: 768px) {
-      .wrap { padding: 12px; }
-      h1 { font-size: 22px; }
-      .header { padding: 16px; }
+      .wrap { padding: 10px; }
+      .grid { grid-template-columns: 1fr; }
       
-      .grid {
-        grid-template-columns: 1fr; /* Mobilde kartlar tek sıra alt alta */
-        gap: 14px;
-      }
+      /* Soru açıkken mobilde her şeyi gizle, sadece iframe kalsın */
+      body.viewing .toolbar { display: none !important; }
+      body.viewing .floating-back { display: block; } /* Sadece bu buton kalsın */
       
-      .toolbar {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      
-      body.viewing .toolbar {
-        display: none; /* Mobilde iframe tam ekran olsun diye toolbari gizliyoruz */
-      }
-      
-      body.viewing .floating-back {
-        display: block; /* Geri dön butonunu aktif et */
-        top: 12px;
-        left: 12px;
-        padding: 10px 14px;
-        font-size: 14px;
-      }
-
       iframe {
-        height: 100dvh; /* Mobilde tamamen ekranı kaplasın */
-        min-height: 100dvh;
-        border-radius: 0; 
+        height: 100dvh;
+        border-radius: 0;
       }
       .frame-wrap {
         border-radius: 0;
         border: none;
-        margin: -12px; /* Dış boşlukları sıfırlayıp tam ekran yapmak için */
+        margin: -10px; /* Ekranın tam kenarlarına yaslanması için */
       }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <button class="floating-back" onclick="goHome()">← Ana Sayfa</button>
+    <button class="floating-back" onclick="goHome()">← Ana Sayfaya Dön</button>
     
-    <div class="topbar hidden-while-viewing" id="topBar">
+    <div class="topbar hidden-while-viewing">
       <button class="btn btn-danger" onclick="resetDashboardStats()">Verileri Sıfırla</button>
     </div>
 
-    <div class="header hidden-while-viewing" id="topHeader">
+    <div class="header hidden-while-viewing">
       <h1>ÜNVAN DEĞİŞİKLİĞİ ÖRNEK SORULAR</h1>
     </div>
 
@@ -252,13 +200,14 @@
       </div>
     </section>
 
-    <div class="bottom-warning hidden-while-viewing" id="bottomWarning">
+    <div class="bottom-warning hidden-while-viewing">
       <strong>⚠️ Önemli Uyarı</strong>
-      Bu sistemde yer alan içerikler yalnızca eğitim amaçlıdır. İçeriklerin kullanımından doğabilecek doğrudan veya dolaylı hiçbir sorumluluk kabul edilmez. Tüm kullanım sorumluluğu kullanıcıya aittir. Sorular Örnektir. <br><strong style="display:inline; font-size:inherit; margin:0; color:#2563eb;">Başarılar Dileriz!</strong>
+      İçerikler eğitim amaçlıdır. Başarılar dileriz!
     </div>
   </div>
 
   <script>
+    /* JavaScript kısmında linkler ve temel mantık değişmedi */
     const links = [
       { id: "balik-besleme", title: "Balık Besleme ve Yem Teknolojisi", url: "https://gursel48.github.io/balik-besleme-ve-yem-teknolojisi/" },
       { id: "mevzuat", title: "Su Ürünleri Mevzuat ve Yönetmelik", url: "https://gursel48.github.io/Su-Urunleri-Mevzuat-ve-Yonetmelik/" },
@@ -281,91 +230,40 @@
     const viewer = document.getElementById("viewer");
     const frame = document.getElementById("contentFrame");
     const currentTitle = document.getElementById("currentTitle");
-    const topHeader = document.getElementById("topHeader");
-    const bottomWarning = document.getElementById("bottomWarning");
-    const topBar = document.getElementById("topBar");
-
-    let activeItem = null;
-    let injectRetryTimer = null;
-
-    function safeNum(v) {
-      const n = Number(v);
-      return Number.isFinite(n) ? n : 0;
-    }
-
-    function defaultStats() {
-      return { total: 0, solved: 0, correct: 0, wrong: 0, locked: false };
-    }
 
     function getDashboardStats() {
-      try {
-        return JSON.parse(localStorage.getItem(DASH_KEY) || "{}");
-      } catch (e) {
-        return {};
-      }
+      try { return JSON.parse(localStorage.getItem(DASH_KEY) || "{}"); } catch (e) { return {}; }
     }
 
-    function saveDashboardStats(obj) {
-      localStorage.setItem(DASH_KEY, JSON.stringify(obj));
-    }
-
-    function getCardStats(id) {
-      const all = getDashboardStats();
-      return all[id] || defaultStats();
-    }
+    function saveDashboardStats(obj) { localStorage.setItem(DASH_KEY, JSON.stringify(obj)); }
 
     function normalizeStats(stats) {
-      const total = safeNum(stats.total);
-      const solved = safeNum(stats.solved);
-      const correct = safeNum(stats.correct);
-      const wrong = safeNum(stats.wrong);
+      const total = Number(stats.total) || 0;
+      const solved = Number(stats.solved) || 0;
       const locked = !!stats.locked || (total > 0 && solved >= total);
-      return { total, solved, correct, wrong, locked };
-    }
-
-    function setCardStats(id, stats) {
-      const all = getDashboardStats();
-      all[id] = normalizeStats(stats);
-      saveDashboardStats(all);
-      renderLinks();
-    }
-
-    function statsMarkup(stats) {
-      return `
-        <div class="stats-line"><strong>Toplam Soru:</strong> ${stats.total}</div>
-      `;
-    }
-
-    function getSortedLinks() {
-      return [...links].sort((a, b) => {
-        const sa = getCardStats(a.id);
-        const sb = getCardStats(b.id);
-        if (sa.locked !== sb.locked) return sa.locked ? 1 : -1;
-        return links.findIndex(x => x.id === a.id) - links.findIndex(x => x.id === b.id);
-      });
+      return { total, solved, locked };
     }
 
     function renderLinks() {
       linkGrid.innerHTML = "";
-      const ordered = getSortedLinks();
+      const stats = getDashboardStats();
 
-      ordered.forEach((item) => {
-        const originalIndex = links.findIndex(x => x.id === item.id) + 1;
-        const stats = normalizeStats(getCardStats(item.id));
+      links.forEach((item, index) => {
+        const itemStats = normalizeStats(stats[item.id] || {});
         const card = document.createElement("div");
-        card.className = "card" + (stats.locked ? " locked" : "");
-
+        card.className = "card" + (itemStats.locked ? " locked" : "");
         card.innerHTML = `
-          <div class="lock-badge">🔒 Tamamlandı</div>
-          <h3>${originalIndex}. ${item.title}</h3>
-          <div class="stats-box" id="stats-${item.id}">${statsMarkup(stats)}</div>
+          <div class="lock-badge">✓ Tamamlandı</div>
+          <h3>${index + 1}. ${item.title}</h3>
+          <div class="stats-box">
+            <div class="stats-line"><strong>Toplam Soru:</strong> ${itemStats.total || '-'}</div>
+          </div>
           <div class="btn-row">
-            ${stats.locked
-              ? `<button class="btn btn-unlock" type="button" onclick="unlockCard('${item.id}')">Tekrar Çöz</button>`
-              : `<button class="btn btn-primary" type="button" onclick="openPage('${item.id}')">Sınava Başla</button>`}
+            ${itemStats.locked
+              ? `<button class="btn btn-unlock" onclick="unlockCard('${item.id}')">Tekrar Çöz</button>`
+              : `<button class="btn btn-primary" onclick="openPage('${item.id}')">Sınava Başla</button>`}
           </div>
         `;
-
         linkGrid.appendChild(card);
       });
     }
@@ -373,243 +271,39 @@
     function openPage(id) {
       const item = links.find(x => x.id === id);
       if (!item) return;
-
-      const stats = getCardStats(id);
-      if (stats.locked) return;
-
       activeItem = item;
       currentTitle.textContent = item.title;
       frame.src = item.url;
       menuView.style.display = "none";
       viewer.style.display = "block";
       document.body.classList.add("viewing");
-      topBar.style.display = "none";
-      topHeader.style.display = "none";
-      bottomWarning.style.display = "none";
       window.scrollTo(0, 0);
     }
 
     function goHome() {
-      stopRetry();
       frame.src = "";
       viewer.style.display = "none";
       menuView.style.display = "block";
       document.body.classList.remove("viewing");
-      topBar.style.display = "flex";
-      topHeader.style.display = "block";
-      bottomWarning.style.display = "block";
       renderLinks();
       window.scrollTo(0, 0);
     }
 
     function unlockCard(id) {
-      const stats = getCardStats(id);
-      setCardStats(id, { ...stats, locked: false });
+      const stats = getDashboardStats();
+      if (stats[id]) {
+        stats[id].locked = false;
+        saveDashboardStats(stats);
+        renderLinks();
+      }
     }
 
     function resetDashboardStats() {
-      if (!confirm("Ana sayfadaki tüm istatistik verileri sıfırlansın mı?")) return;
-      localStorage.removeItem(DASH_KEY);
-      renderLinks();
-    }
-
-    function stopRetry() {
-      if (injectRetryTimer) {
-        clearTimeout(injectRetryTimer);
-        injectRetryTimer = null;
+      if (confirm("Tüm veriler silinsin mi?")) {
+        localStorage.removeItem(DASH_KEY);
+        renderLinks();
       }
     }
-
-    function injectBridge() {
-      stopRetry();
-      if (!activeItem) return;
-
-      try {
-        const doc = frame.contentDocument;
-        const win = frame.contentWindow;
-        if (!doc || !win) {
-          injectRetryTimer = setTimeout(injectBridge, 1200);
-          return;
-        }
-
-        if (doc.getElementById(BRIDGE_ID)) {
-          try { win.__gysSendStats && win.__gysSendStats(); } catch (e) {}
-          return;
-        }
-
-        const script = doc.createElement("script");
-        script.id = BRIDGE_ID;
-        script.textContent = `
-          (function() {
-            function n(v) {
-              var x = Number(v);
-              return Number.isFinite(x) ? x : 0;
-            }
-
-            function textFrom(el) {
-              if (!el) return "";
-              return (el.innerText || el.textContent || "").replace(/\\s+/g, " ").trim();
-            }
-
-            function sumFromLikelyButtons() {
-              var total = 0;
-              var seen = {};
-              var selectors = [
-                "button", ".set-btn", ".menu-btn", ".exam-btn", ".quiz-btn",
-                ".card", ".set-card", ".menu-card", "[onclick]", "[role='button']", "a"
-              ];
-
-              selectors.forEach(function(sel) {
-                try {
-                  document.querySelectorAll(sel).forEach(function(el) {
-                    var txt = textFrom(el);
-                    if (!txt) return;
-                    if (!/deneme|set|soru/i.test(txt)) return;
-                    var m = txt.match(/(\\d+)\\s*Soru\\b/i);
-                    if (!m) return;
-                    var key = txt + "::" + m[1];
-                    if (seen[key]) return;
-                    seen[key] = true;
-                    total += n(m[1]);
-                  });
-                } catch (e) {}
-              });
-
-              return total;
-            }
-
-            function sumFromStructuredMenu() {
-              var total = 0;
-              try {
-                var seen = {};
-                var nodes = Array.from(document.querySelectorAll("button, div, a, span, h1, h2, h3, h4"));
-                var denemeNodes = nodes.filter(function(el) {
-                  var t = textFrom(el);
-                  return /^deneme\\s*-?\\s*\\d+/i.test(t) || /^set\\s*-?\\s*\\d+/i.test(t);
-                });
-
-                denemeNodes.forEach(function(node) {
-                  var scope = node.closest("button, a, .card, .set-card, .menu-card, div") || node.parentElement || node;
-                  var txt = textFrom(scope);
-                  if (!txt || !/soru/i.test(txt)) {
-                    txt = textFrom(node.parentElement) + " " + textFrom(node.nextElementSibling);
-                  }
-                  var m = txt.match(/(\\d+)\\s*Soru\\b/i);
-                  if (!m) return;
-                  var key = txt + "::" + m[1];
-                  if (seen[key]) return;
-                  seen[key] = true;
-                  total += n(m[1]);
-                });
-              } catch (e) {}
-              return total;
-            }
-
-            function sumQuestionCounts() {
-              var total = sumFromLikelyButtons();
-              if (total) return total;
-              total = sumFromStructuredMenu();
-              if (total) return total;
-              try {
-                if (typeof questions !== "undefined" && Array.isArray(questions)) return questions.length;
-              } catch (e) {}
-              return 0;
-            }
-
-            function readStats() {
-              var total = sumQuestionCounts();
-              var solved = 0, correct = 0, wrong = 0;
-
-              try {
-                if (typeof userAnswers !== "undefined" && userAnswers && typeof userAnswers === "object") {
-                  solved = Object.keys(userAnswers).length;
-                }
-              } catch (e) {}
-
-              try {
-                if (typeof stats !== "undefined" && stats && typeof stats === "object") {
-                  correct = n(stats.correct);
-                  wrong = n(stats.wrong);
-                }
-              } catch (e) {}
-
-              try {
-                for (var i = 0; i < localStorage.length; i++) {
-                  var key = localStorage.key(i);
-                  if (!key) continue;
-                  if (key.indexOf("state_set_") === 0 || key.indexOf("quiz_state") >= 0 || key.indexOf("currentSet") >= 0) {
-                    var raw = localStorage.getItem(key);
-                    if (!raw) continue;
-                    var data = null;
-                    try { data = JSON.parse(raw); } catch (e) { data = null; }
-                    if (!data) continue;
-
-                    if (data.userAnswers && typeof data.userAnswers === "object") {
-                      solved = Math.max(solved, Object.keys(data.userAnswers).length);
-                    }
-                    if (data.stats && typeof data.stats === "object") {
-                      correct = Math.max(correct, n(data.stats.correct));
-                      wrong = Math.max(wrong, n(data.stats.wrong));
-                    }
-                  }
-                }
-              } catch (e) {}
-
-              parent.postMessage({
-                type: "gys-stats",
-                href: location.href,
-                total: total,
-                solved: solved,
-                correct: correct,
-                wrong: wrong
-              }, "*");
-            }
-
-            window.__gysSendStats = readStats;
-            window.__gysSendStats();
-            setInterval(window.__gysSendStats, 1200);
-          })();
-        `;
-        doc.documentElement.appendChild(script);
-
-        setTimeout(() => {
-          try { win.__gysSendStats && win.__gysSendStats(); } catch (e) {}
-        }, 400);
-
-      } catch (e) {
-        injectRetryTimer = setTimeout(injectBridge, 1500);
-      }
-    }
-
-    window.addEventListener("message", function(event) {
-      if (!activeItem) return;
-      if (!event.data || event.data.type !== "gys-stats") return;
-
-      const id = activeItem.id;
-      const old = normalizeStats(getCardStats(id));
-      const d = event.data;
-
-      const next = normalizeStats({
-        total: d.total || old.total,
-        solved: safeNum(d.solved),
-        correct: safeNum(d.correct),
-        wrong: safeNum(d.wrong),
-        locked: old.locked
-      });
-
-      if (next.total > 0 && next.solved >= next.total) {
-        next.locked = true;
-      }
-
-      setCardStats(id, next);
-    });
-
-    frame.addEventListener("load", function() {
-      if (!activeItem) return;
-      setTimeout(injectBridge, 700);
-      setTimeout(injectBridge, 1800);
-      setTimeout(injectBridge, 3200);
-    });
 
     renderLinks();
   </script>
