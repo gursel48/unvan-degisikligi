@@ -8,7 +8,7 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       background: #f4f6fb;
       color: #1f2937;
     }
@@ -25,50 +25,50 @@
     .header, .bottom-warning, .frame-wrap, .toolbar, .card {
       background: #fff;
       border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,.05);
+      box-shadow: 0 8px 24px rgba(0,0,0,.07);
       border: 1px solid #e5e7eb;
     }
     .header {
-      padding: 24px 20px;
-      margin-bottom: 20px;
+      padding: 22px 18px;
+      margin-bottom: 18px;
       text-align: center;
     }
     h1 {
       margin: 0 0 8px 0;
       font-size: 26px;
-      line-height: 1.3;
-      color: #111827;
+      line-height: 1.25;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
     }
     .card {
-      padding: 20px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
+      min-height: 220px;
       position: relative;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .card.locked {
-      opacity: 0.85;
-      background: #f9fafb;
+      opacity: 0.82;
+      border-color: #d1d5db;
     }
     .card h3 {
       margin: 0;
       font-size: 18px;
-      line-height: 1.4;
+      line-height: 1.35;
+      min-height: 48px;
       padding-right: 70px;
     }
     .lock-badge {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      font-size: 11px;
+      top: 14px;
+      right: 14px;
+      font-size: 13px;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 6px 10px;
       border-radius: 999px;
       background: #eef2ff;
       color: #3730a3;
@@ -81,18 +81,18 @@
       border: 1px solid #e5e7eb;
       border-radius: 12px;
       padding: 12px;
-      margin-top: auto;
+      min-height: 98px;
     }
-    .stats-line { font-size: 14px; color: #4b5563; }
-    .btn-row { display: flex; gap: 10px; margin-top: 5px; }
+    .stats-line { font-size: 14px; color: #374151; line-height: 1.65; margin: 2px 0; }
+    .stats-line strong { color: #111827; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
     .btn {
-      flex: 1;
       border: none;
       border-radius: 12px;
-      padding: 14px;
+      padding: 12px 14px;
       cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 700;
       transition: .2s ease;
     }
     .btn:active { transform: scale(0.98); }
@@ -100,212 +100,103 @@
     .btn-danger { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
     .btn-unlock { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
     
-    .viewer { display: none; }
     .hidden-while-viewing { display: block; }
     body.viewing .hidden-while-viewing { display: none !important; }
+    body.viewing .wrap { padding: 0; max-width: 100%; }
+
+    /* YENİ SİSTEM: UYGULAMA GİBİ TAM EKRAN İZLEYİCİ */
+    .viewer { display: none; }
     
-    /* Üst Toolbar (Masaüstü için) */
-    .toolbar {
-      padding: 14px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
+    body.viewing {
+      overflow: hidden; /* Ana sayfanın arkada kaymasını tamamen engeller */
     }
-    .current-title { font-weight: 700; font-size: 18px; }
     
-    .frame-wrap { overflow: hidden; -webkit-overflow-scrolling: touch; }
-    iframe {
-      width: 100%;
-      height: calc(100dvh - 120px);
-      min-height: 560px;
-      border: 0;
-      border-radius: 16px;
+    body.viewing .viewer {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh; /* Fallback */
+      height: 100dvh; /* Modern mobil tarayıcılar için adres çubuğu uyumluluğu */
       background: #fff;
+      z-index: 9999;
+    }
+
+    body.viewing .toolbar {
+      flex: 0 0 auto; /* Toolbar boyutu sabit kalır */
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin: 0;
+      border-radius: 0;
+    }
+
+    body.viewing .toolbar .btn {
+      padding: 10px 16px;
+      font-size: 15px;
+      background: #2563eb; /* Mavi Buton */
+    }
+
+    body.viewing .current-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: #1f2937;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; /* Başlık çok uzunsa sonuna ... koyar */
+    }
+
+    body.viewing .frame-wrap {
+      flex: 1 1 auto; /* Kalan tüm boşluğu iframe kaplar */
+      padding: 0;
+      margin: 0;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    body.viewing iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 0;
       display: block;
     }
 
-    /* Modern Yüzen Buton - Sadece mobilde soru açıkken görünür */
-    .floating-back {
-      position: fixed;
-      z-index: 9999;
-      display: none;
-      background: #2563eb; /* Dikkat çekici mavi */
-      color: #fff;
-      font-weight: 700;
-      border-radius: 30px;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
-      border: none;
-      padding: 12px 20px;
-      cursor: pointer;
-      top: 15px;
-      left: 15px;
-      font-size: 14px;
-    }
-
     .bottom-warning {
-      margin-top: 20px;
-      padding: 20px;
-      font-size: 14px;
-      color: #4b5563;
+      margin-top: 18px;
+      padding: 18px;
+      line-height: 1.65;
+      color: #374151;
       text-align: center;
     }
+    .bottom-warning strong {
+      color: #111827;
+      font-size: 18px;
+      display: block;
+      margin-bottom: 8px;
+    }
 
-    /* MOBİL ÖZEL AYARLAR */
-    @media (max-width: 768px) {
-      .wrap { padding: 10px; }
+    @media (max-width: 600px) {
+      .wrap { padding: 12px; }
       .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 22px; }
+      .btn { width: 100%; font-size: 16px; padding: 14px; }
       
-      /* Soru açıkken mobilde her şeyi gizle, sadece iframe kalsın */
-      body.viewing .toolbar { display: none !important; }
-      body.viewing .floating-back { display: block; } /* Sadece bu buton kalsın */
-      
-      iframe {
-        height: 100dvh;
-        border-radius: 0;
-      }
-      .frame-wrap {
-        border-radius: 0;
-        border: none;
-        margin: -10px; /* Ekranın tam kenarlarına yaslanması için */
-      }
+      /* Mobilde başlığı gizleyip butona yer açıyoruz */
+      body.viewing .current-title { display: none; } 
+      body.viewing .toolbar .btn { width: 100%; } /* Buton menüyü kaplar */
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <button class="floating-back" onclick="goHome()">← Ana Sayfaya Dön</button>
-    
-    <div class="topbar hidden-while-viewing">
-      <button class="btn btn-danger" onclick="resetDashboardStats()">Verileri Sıfırla</button>
-    </div>
-
-    <div class="header hidden-while-viewing">
-      <h1>ÜNVAN DEĞİŞİKLİĞİ ÖRNEK SORULAR</h1>
-    </div>
-
-    <section id="menuView">
-      <div class="grid" id="linkGrid"></div>
-    </section>
-
-    <section id="viewer" class="viewer">
-      <div class="toolbar">
-        <div class="current-title" id="currentTitle">Seçili Sayfa</div>
-        <button class="btn btn-primary" style="flex: none; padding: 10px 20px;" onclick="goHome()">Ana Sayfaya Dön</button>
-      </div>
-
-      <div class="frame-wrap">
-        <iframe id="contentFrame" src="" title="İçerik Alanı"></iframe>
-      </div>
-    </section>
-
-    <div class="bottom-warning hidden-while-viewing">
-      <strong>⚠️ Önemli Uyarı</strong>
-      İçerikler eğitim amaçlıdır. Başarılar dileriz!
-    </div>
-  </div>
-
-  <script>
-    /* JavaScript kısmında linkler ve temel mantık değişmedi */
-    const links = [
-      { id: "balik-besleme", title: "Balık Besleme ve Yem Teknolojisi", url: "https://gursel48.github.io/balik-besleme-ve-yem-teknolojisi/" },
-      { id: "mevzuat", title: "Su Ürünleri Mevzuat ve Yönetmelik", url: "https://gursel48.github.io/Su-Urunleri-Mevzuat-ve-Yonetmelik/" },
-      { id: "balik-hastaliklari", title: "Balık Hastalıkları", url: "https://gursel48.github.io/balik-hastaliklari/" },
-      { id: "ekonomi", title: "Su Ürünleri Ekonomisi", url: "https://gursel48.github.io/Su-Urunleri-Ekonomisi/" },
-      { id: "hijyen", title: "Su Ürünlerinde Hijyen ve Kalite Kontrolü", url: "https://gursel48.github.io/Su-urunlerinde-Hijyen-ve-Kalite-Kontrolu/" },
-      { id: "su-kirliligi", title: "Su Kirliliği ve Kontrolü", url: "https://gursel48.github.io/Su-Kirliligi-ve-Kontrolu/" },
-      { id: "su-kalitesi", title: "Su Kalitesi", url: "https://gursel48.github.io/Su-Kalitesi/" },
-      { id: "ornek-sorular", title: "Örnek Sorular GYS Merkezi", url: "https://gursel48.github.io/ornek-sorular-gysmerkezi/" },
-      { id: "konular", title: "GYS Merkezi Konular", url: "https://gursel48.github.io/gysmerkezi-konular/" },
-      { id: "gemini-600", title: "Gemini 600", url: "https://gursel48.github.io/gemini-600/" },
-      { id: "chatgbt600", title: "ChatGBT 600 Soru", url: "https://gursel48.github.io/chatgbt600-soru/" },
-      { id: "balik-boy", title: "Mevzuat Balık Boy", url: "https://gursel48.github.io/mevzuat-balik-boy/" }
-    ];
-
-    const DASH_KEY = "dashboard_stats_v7";
-    const BRIDGE_ID = "__gys_parent_bridge__";
-    const linkGrid = document.getElementById("linkGrid");
-    const menuView = document.getElementById("menuView");
-    const viewer = document.getElementById("viewer");
-    const frame = document.getElementById("contentFrame");
-    const currentTitle = document.getElementById("currentTitle");
-
-    function getDashboardStats() {
-      try { return JSON.parse(localStorage.getItem(DASH_KEY) || "{}"); } catch (e) { return {}; }
-    }
-
-    function saveDashboardStats(obj) { localStorage.setItem(DASH_KEY, JSON.stringify(obj)); }
-
-    function normalizeStats(stats) {
-      const total = Number(stats.total) || 0;
-      const solved = Number(stats.solved) || 0;
-      const locked = !!stats.locked || (total > 0 && solved >= total);
-      return { total, solved, locked };
-    }
-
-    function renderLinks() {
-      linkGrid.innerHTML = "";
-      const stats = getDashboardStats();
-
-      links.forEach((item, index) => {
-        const itemStats = normalizeStats(stats[item.id] || {});
-        const card = document.createElement("div");
-        card.className = "card" + (itemStats.locked ? " locked" : "");
-        card.innerHTML = `
-          <div class="lock-badge">✓ Tamamlandı</div>
-          <h3>${index + 1}. ${item.title}</h3>
-          <div class="stats-box">
-            <div class="stats-line"><strong>Toplam Soru:</strong> ${itemStats.total || '-'}</div>
-          </div>
-          <div class="btn-row">
-            ${itemStats.locked
-              ? `<button class="btn btn-unlock" onclick="unlockCard('${item.id}')">Tekrar Çöz</button>`
-              : `<button class="btn btn-primary" onclick="openPage('${item.id}')">Sınava Başla</button>`}
-          </div>
-        `;
-        linkGrid.appendChild(card);
-      });
-    }
-
-    function openPage(id) {
-      const item = links.find(x => x.id === id);
-      if (!item) return;
-      activeItem = item;
-      currentTitle.textContent = item.title;
-      frame.src = item.url;
-      menuView.style.display = "none";
-      viewer.style.display = "block";
-      document.body.classList.add("viewing");
-      window.scrollTo(0, 0);
-    }
-
-    function goHome() {
-      frame.src = "";
-      viewer.style.display = "none";
-      menuView.style.display = "block";
-      document.body.classList.remove("viewing");
-      renderLinks();
-      window.scrollTo(0, 0);
-    }
-
-    function unlockCard(id) {
-      const stats = getDashboardStats();
-      if (stats[id]) {
-        stats[id].locked = false;
-        saveDashboardStats(stats);
-        renderLinks();
-      }
-    }
-
-    function resetDashboardStats() {
-      if (confirm("Tüm veriler silinsin mi?")) {
-        localStorage.removeItem(DASH_KEY);
-        renderLinks();
-      }
-    }
-
-    renderLinks();
-  </script>
-</body>
-</html>
+    <div class="topbar hidden-while-viewing" id="topBar">
+      <button class="btn btn-danger" style="width: auto;" onclick="resetDashboardStats()">Ana Sayfa Verilerini Sıfırla</button>
